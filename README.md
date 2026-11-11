@@ -79,3 +79,14 @@ pytest
 
 cargo test   # Rust port
 ```
+
+## Docker
+
+Multi-stage, multi-arch image (linux/amd64 + linux/arm64) built on `python:3.12-slim`:
+
+```bash
+docker build -t momentum .
+docker run --rm momentum   # runs the test suite as a smoke check
+```
+
+For the Go/Rust variant, see the note at the top of the Dockerfile.

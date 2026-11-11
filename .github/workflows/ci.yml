@@ -28,3 +28,9 @@ jobs:
           components: clippy
       - run: cargo test --locked -- --nocapture
       - run: cargo clippy -- -D warnings
+
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t ${{ github.event.repository.name }}:ci .
