@@ -1,0 +1,10 @@
+[package]
+name = "momentum"
+version = "0.1.0"
+edition = "2021"
+description = "Rolling-window load trend tracker: rising/falling/steady with least-squares slope, plus short-vs-long acceleration detection."
+license = "MIT"
+
+[lib]
+name = "momentum"
+path = "src/lib.rs"

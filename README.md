@@ -13,6 +13,10 @@ proactively, before saturation.
 - Pure Python, zero runtime dependencies. Injectable clock — fully
   deterministic in tests, no sleeps, no wall-clock flakiness.
 - 13 tests, all passing in CI on every push.
+- **Rust port** (`src/lib.rs`): same algorithm, same semantics, zero
+  dependencies — for embedding in perf-critical collectors. 13 tests in
+  `tests/test_momentum.rs` mirror the Python suite 1:1; `cargo test` runs
+  in CI alongside pytest.
 
 ## Architecture
 
@@ -39,6 +43,8 @@ glancing at a dashboard — encoded so automation can act on it.
 
 ## Usage
 
+Python:
+
 ```python
 from momentum import Momentum
 
@@ -51,10 +57,25 @@ if t["direction"] == "rising" and m.accelerating():
     scale_out()  # climbing, and climbing faster — act now
 ```
 
+Rust:
+
+```rust
+use momentum::{Momentum, Direction};
+
+let mut m = Momentum::new(60.0, 300.0)?;
+m.push(rps, Some(ts))?;
+let t = m.trend();
+if t.direction == Direction::Rising && m.accelerating() {
+    scale_out(); // climbing, and climbing faster — act now
+}
+```
+
 ## Development
 
 ```bash
 uv venv && . .venv/Scripts/activate  # or source .venv/bin/activate
 uv pip install pytest
 pytest
+
+cargo test   # Rust port
 ```
