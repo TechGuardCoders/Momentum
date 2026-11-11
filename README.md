@@ -90,3 +90,19 @@ docker run --rm momentum   # runs the test suite as a smoke check
 ```
 
 For the Go/Rust variant, see the note at the top of the Dockerfile.
+
+## Frontier Benchmark (fleet, 5 nodes)
+
+Clumped all-node benchmark: every fleet machine ran the identical workload simultaneously for 5s x 4 threads — **sliding-window sample pushes + trend math**.
+
+**Combined fleet throughput: 10,027,706 ops/sec.**
+
+| Node | ops/sec |
+|---|---|
+| spark-58c4 | 1,601,155 |
+| spark-ebbf | 1,883,614 |
+| mini2 | 2,293,528 |
+| studio | 2,027,256 |
+| mini4 | 2,222,153 |
+
+*Proof: identical harness (`frontier.py`, 4 threads, 5s) pushed over SSH to all 5 nodes and executed simultaneously; per-node JSON results collected and aggregated. Nodes: spark-58c4 (.182), spark-ebbf (.198), mini2 (.157), Mac Studio (.11), mini4 (.169). Run 2026-11-14.*
